@@ -1,29 +1,24 @@
-import express from "express";
-import {json } from "body-parser";
-
-const app = express(); 
-app.use(json());
-
-
-app.get("/users/crtuser",(req,res)=>{
-  res.send({
-     "type": "Welcome",
-     "message" : "Hello George!",
-  });
-})
-app.get("/users/:id",(req,res)=>{
-  if(req.params.id==="1"){
-    res.send({
-      "type": "Gretting",
-      "message" : "Hi there!",
-   })
+import mongoose from 'mongoose';
+import { app } from './app';
+const start = async () => {
+  if (!process.env.jwt) {
+    throw new Error('JWT_KEY must be defined');
   }
-  else res.send({
-    "type": "Leaving",
-    "message" : "Bye there!",
- })
-})
 
-app.listen(3500,()=>{
-  console.log("Listening on port 3500")
-})
+  try {
+    await mongoose.connect('mongodb+srv://george:NocbVDCoEPfgNoGv@clusterlicenta.mqtzs.mongodb.net/User?retryWrites=true&w=majority', {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true
+    });
+
+
+    console.log('Connected to MongoDb database Users');
+  } catch (err) {
+    console.error(err);
+  }
+  app.listen(3504, () => {
+    console.log('Listening on port 3504.');
+  });
+};
+start();

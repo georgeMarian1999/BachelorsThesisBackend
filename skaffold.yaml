@@ -4,6 +4,7 @@ deploy:
   kubectl:
     manifests:
       - ./infra/k8s/*
+      # - ./infradev/k8s/*
 build:
   artifacts:
     - image: george1999/auth
@@ -14,8 +15,24 @@ build:
         manual:
           - src: "src/**/*.ts"
             dest: .
-    - image: george1999/teme
-      context: teme
+    - image: george1999/profesor
+      context: profesor
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
+    - image: george1999/facultate
+      context: facultate
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
+    - image: george1999/colaborare
+      context: colaborare
       docker:
         dockerfile: Dockerfile
       sync:
